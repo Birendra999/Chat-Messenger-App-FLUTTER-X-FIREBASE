@@ -1,12 +1,12 @@
 import 'package:chat_messenger_app/components/my_buttons.dart';
 import 'package:chat_messenger_app/components/my_text_field.dart';
+import 'package:chat_messenger_app/services/auth/auth_services.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   final void Function()? onTap;
-  const LoginPage({super.key,
-    required this.onTap
-  });
+  const LoginPage({super.key, required this.onTap});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -15,7 +15,22 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  void signIn(){}
+  void signIn() async {
+    // get the auth service
+    final authService = Provider.of<AuthService>(context, listen: false);
+    try {
+      await authService.signInWithEmailAndPassword(
+          emailController.text, passwordController.text);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
+          ),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,30 +75,35 @@ class _LoginPageState extends State<LoginPage> {
                 MyTextField(
                     controller: passwordController,
                     hintText: "Password",
-                    obsecure: true
-                    ),
+                    obsecure: true),
 
-                    // sign button
+                // sign button
+                SizedBox(
+                  height: 25,
+                ),
+                MyButton(onTap: signIn, text: "Sign In"),
+                SizedBox(
+                  height: 50,
+                ),
+                // not a memeber ?register now
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Not a memeber?",
+                    ),
                     SizedBox(
-                      height: 25,
+                      width: 5,
                     ),
-                    MyButton(onTap: signIn, text: "Sign In"),
-                   SizedBox(height: 50,),
-                    // not a memeber ?register now
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Not a memeber?", ),
-                        SizedBox(width: 5,),
-                        GestureDetector(
-                          onTap: widget.onTap,
-                          child: Text("Register Now",
-                          style: TextStyle(fontWeight: FontWeight.bold),),
-                        )
-                       
-                      ],
+                    GestureDetector(
+                      onTap: widget.onTap,
+                      child: Text(
+                        "Register Now",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     )
-
+                  ],
+                )
               ],
             ),
           ),
