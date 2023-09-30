@@ -26,6 +26,7 @@ Flutter-Firebase Chat: Seamlessly connect and chat with friends using this app. 
     
 ## 🛠 Skills
 - JAVA
+- DART
 - FLUTTER
 - MYSQL
 
