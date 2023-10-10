@@ -2,7 +2,8 @@
 # CHAT MESSENGER APP
 
 Flutter-Firebase Chat: Seamlessly connect and chat with friends using this app. Real-time messaging, user authentication, and more for a dynamic social experience.
-
+# Note
+Pending (It will be complete once the final semester end examination is finished.
 
 ## Authors
 
